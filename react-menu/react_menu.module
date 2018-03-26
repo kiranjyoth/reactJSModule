@@ -1,0 +1,48 @@
+<?php
+
+/**
+ * @file
+ * Sandbox Helper main .module file.
+ *
+ */
+
+/**
+ * Implements hook_block_info().
+ */
+function react_menu_block_info() {
+  // react recent nodes block
+  $blocks['react_recent_menu_items'] = array(
+    'info' => t('ReactJS Recent Menu Items'),
+    'cache' => DRUPAL_NO_CACHE
+  );
+
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function react_menu_block_view($delta) {
+
+  libraries_load('react');
+  drupal_add_js(drupal_get_path('module', 'react_menu') . "/build/react_menu.js");
+
+  $block = array();
+
+  switch ($delta) {
+    case 'react_recent_menu_items':
+      $block['subject'] = t('Recent Menu Items');
+      $block['content'] = _react_menu_react_recent_menu_items_content();
+      break;
+
+  }
+  return $block;
+}
+
+function _react_menu_react_recent_menu_items_content() {
+
+  $output = "<div id='recent-menu-items'></div>";
+
+  return $output;
+
+}
